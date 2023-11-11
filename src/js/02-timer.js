@@ -1,5 +1,7 @@
 import flatpickr from "flatpickr";
+import iziToast from "izitoast";
 import "flatpickr/dist/flatpickr.min.css";
+import "izitoast/dist/css/iziToast.min.css";
 
 const inputReff = document.querySelector('#datetime-picker')
 const startReffBtn = document.querySelector('[data-start]')
@@ -13,16 +15,19 @@ startReffBtn.disabled = true
 let currentDate = new Date()
 let selectedDate = null
 
-
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // console.log(selectedDates[0]);
     if (selectedDates[0].getTime() < currentDate.getTime()) {
-      alert('Please choose a date in the future')
+      iziToast.show({
+        title: 'date',
+        color: 'red',
+        position: 'topCenter',
+        message: 'Please choose a date in the future'
+      });
       startReffBtn.disabled = true
       return
     }
